@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#FFE1E8">
+  <meta name="description" content="Selam Cake Shop - Freshly baked cakes made with love. Order cakes, browse our menu, and find us.">
+  <title>Selam Cake Shop</title>
+  <link rel="icon" type="image/icon" href="favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* ============================================
+         SELAM PALETTE — white / blush pink / soft cyan
+         ============================================ */
+      --white: #FFFFFF;
+      --cream: #FFFDFC;
+      --pink-50:  #FFF4F6;
+      --pink-100: #FFE1E8;
+      --pink-200: #FFCEDA;
+      --pink-400: #F6A6BC;
+      --pink-600: #E27793;
+      --pink-700: #C45E7B;
+      --cyan-50:  #F0FDFF;
+      --cyan-100: #DDFBFF;
+      --cyan-200: #BEF3FA;
+      --cyan-500: #6FC7D6;
+
+      --text-dark: #3A2C33;
+      --text-muted: #9A8790;
+
+      --shadow-soft: 0 10px 30px rgba(228, 132, 160, 0.14);
+      --shadow-card: 0 18px 44px rgba(228, 132, 160, 0.16), 0 3px 10px rgba(58, 44, 51, 0.05);
+      --shadow-nav: 0 -6px 28px rgba(228, 132, 160, 0.18);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(560px 320px at 12% 0%, var(--pink-50) 0%, transparent 60%),
+        radial-gradient(520px 300px at 100% 8%, var(--cyan-50) 0%, transparent 55%),
+        var(--cream);
+      min-height: 100vh;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 112px;
+    }
+
+    /* Main container */
+    .app-container {
+      position: relative;
+      z-index: 1;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+    }
+
+    /* Sections */
+    .page-section { display: none; animation: fadeInUp 0.5s ease-out; }
+    .page-section.active { display: block; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 56px 0 38px;
+      position: relative;
+    }
+
+    .logo-wrapper {
+      width: 138px;
+      height: 138px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 6px solid var(--pink-100);
+      box-shadow: var(--shadow-soft), 0 0 0 10px var(--cyan-50);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .logo-wrapper:hover {
+      transform: scale(1.05) rotate(-2deg);
+      box-shadow: var(--shadow-soft), 0 0 0 10px var(--cyan-100);
+    }
+
+    .logo-wrapper img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .shop-name {
+      font-family: 'Fraunces', serif;
+      font-size: 2.35rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .shop-name em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--pink-700);
+    }
+
+    .tagline {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    /* Signature: piped frosting edge on cards */
+    .glass-card {
+      background: var(--white);
+      border: 1px solid var(--pink-100);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 14px;
+      background-image: radial-gradient(circle at 10px 0px, transparent 9px, var(--pink-100) 9.5px 10px, transparent 10.5px);
+      background-size: 20px 14px;
+      background-repeat: repeat-x;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 52px rgba(228, 132, 160, 0.22), 0 3px 10px rgba(58, 44, 51, 0.06);
+      border-color: var(--pink-200);
+    }
+
+    .glass-card:active { transform: scale(0.97); }
+
+    /* Action Cards */
+    .action-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 44px;
+    }
+
+    .action-card { padding: 30px 26px 26px; cursor: pointer; }
+
+    .action-card-inner {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Signature: dollop-shaped icon badge */
+    .action-icon {
+      width: 62px; height: 62px;
+      border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: linear-gradient(150deg, var(--pink-100), var(--pink-50));
+      box-shadow: 0 6px 18px rgba(228, 132, 160, 0.25);
+      transition: var(--transition);
+    }
+
+    .action-card[data-link="menu"] .action-icon {
+      background: linear-gradient(150deg, var(--cyan-100), var(--cyan-50));
+      box-shadow: 0 6px 18px rgba(111, 199, 214, 0.28);
+    }
+
+    .glass-card:hover .action-icon {
+      transform: scale(1.1) rotate(-6deg);
+      border-radius: 55% 45% 42% 58% / 42% 55% 45% 58%;
+    }
+
+    .action-icon svg {
+      width: 30px; height: 30px;
+      stroke: var(--pink-700);
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .action-card[data-link="menu"] .action-icon svg { stroke: #3A97A8; }
+
+    .action-content { flex: 1; }
+
+    .action-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 5px;
+    }
+
+    .action-desc {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: var(--pink-600);
+      border: none;
+      border-radius: 50px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--white);
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(226, 119, 147, 0.35);
+      transition: var(--transition);
+      position: relative;
+      z-index: 1;
+    }
+
+    .action-card[data-link="menu"] .action-btn {
+      background: var(--cyan-500);
+      box-shadow: 0 8px 20px rgba(111, 199, 214, 0.35);
+    }
+
+    .action-btn:hover {
+      transform: translateX(4px);
+      box-shadow: 0 10px 26px rgba(226, 119, 147, 0.45);
+    }
+
+    .action-card[data-link="menu"] .action-btn:hover {
+      box-shadow: 0 10px 26px rgba(111, 199, 214, 0.45);
+    }
+
+    .action-btn svg {
+      width: 15px; height: 15px;
+      stroke: var(--white);
+      stroke-width: 2.4;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: var(--transition);
+    }
+
+    .action-btn:hover svg { transform: translateX(3px); }
+
+    /* Section Titles */
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.22rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title .dot {
+      width: 9px; height: 9px;
+      border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%;
+      background: var(--pink-600);
+      box-shadow: 0 0 0 4px var(--pink-100);
+    }
+
+    /* Contact Section */
+    .contact-section { margin-bottom: 38px; }
+    .contact-card { padding: 22px 22px 10px; }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 14px 0;
+      border-bottom: 1px dashed var(--pink-100);
+      position: relative;
+      z-index: 1;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .contact-item:last-child { border-bottom: none; }
+    .contact-item:hover { padding-left: 8px; }
+
+    .contact-icon {
+      width: 42px; height: 42px;
+      border-radius: 45% 55% 52% 48% / 50% 45% 55% 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: var(--pink-50);
+      box-shadow: inset 0 0 0 1px var(--pink-100);
+    }
+
+    .contact-icon svg {
+      width: 19px; height: 19px;
+      stroke: var(--pink-700);
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .contact-info { flex: 1; min-width: 0; }
+
+    .contact-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--pink-600);
+      margin-bottom: 3px;
+    }
+
+    .contact-value {
+      font-size: 0.94rem;
+      color: var(--text-dark);
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    /* Location Section */
+    .location-section { margin-bottom: 38px; }
+    .map-card { padding: 18px; }
+
+    .map-placeholder {
+      width: 100%;
+      height: 196px;
+      border-radius: var(--radius-md);
+      background:
+        radial-gradient(circle at 25% 30%, rgba(255, 225, 232, 0.9) 0%, transparent 55%),
+        radial-gradient(circle at 78% 68%, rgba(221, 251, 255, 0.9) 0%, transparent 55%),
+        var(--pink-50);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--pink-100);
+    }
+
+    .map-placeholder svg {
+      width: 44px; height: 44px;
+      stroke: var(--pink-700);
+      stroke-width: 1.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      position: relative;
+      z-index: 1;
+    }
+
+    .map-placeholder span {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+
+    .map-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 14px;
+      background: var(--pink-600);
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--white);
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(226, 119, 147, 0.32);
+      transition: var(--transition);
+      position: relative;
+      z-index: 1;
+      text-decoration: none;
+    }
+
+    .map-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(226, 119, 147, 0.42);
+    }
+
+    .map-btn:active { transform: scale(0.97); }
+
+    .map-btn svg {
+      width: 17px; height: 17px;
+      stroke: var(--white);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Social Section */
+    .social-section { margin-bottom: 38px; }
+    .social-grid { display: flex; justify-content: center; gap: 18px; }
+
+    .social-btn {
+      width: 62px; height: 62px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 1px solid var(--pink-100);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-btn:nth-child(2) { border-color: var(--cyan-200); }
+
+    .social-btn:hover {
+      transform: translateY(-6px) scale(1.08);
+      box-shadow: 0 18px 40px rgba(228, 132, 160, 0.26);
+      background: var(--pink-50);
+    }
+
+    .social-btn:nth-child(2):hover {
+      background: var(--cyan-50);
+      box-shadow: 0 18px 40px rgba(111, 199, 214, 0.3);
+    }
+
+    .social-btn:active { transform: scale(0.92); }
+
+    .social-btn svg {
+      width: 25px; height: 25px;
+      position: relative;
+      z-index: 1;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover svg { transform: scale(1.1); }
+
+    /* Footer */
+    .footer { text-align: center; padding: 18px 0; }
+    .footer-text { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; }
+    .footer-heart { display: inline-block; color: var(--pink-600); animation: heartbeat 1.5s ease-in-out infinite; }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14% { transform: scale(1.15); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.15); }
+    }
+
+    /* Ripple effect */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(226, 119, 147, 0.28);
+      transform: scale(0);
+      animation: rippleEffect 0.6s linear;
+      pointer-events: none;
+    }
+
+    @keyframes rippleEffect {
+      to { transform: scale(4); opacity: 0; }
+    }
+
+    /* ============================================
+       BOTTOM NAVIGATION BAR
+       ============================================ */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 0 0 12px 0;
+      pointer-events: none;
+    }
+
+    .bottom-nav-inner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 8px;
+      background: var(--white);
+      border: 1px solid var(--pink-100);
+      border-radius: 32px 32px 26px 26px;
+      box-shadow: var(--shadow-nav);
+      padding: 8px 16px;
+      pointer-events: all;
+      position: relative;
+      max-width: 400px;
+      width: 92%;
+      margin: 0 auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 10px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      color: var(--text-muted);
+      background: transparent;
+      border: none;
+      outline: none;
+      position: relative;
+      min-width: 64px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .nav-item:hover { color: var(--pink-700); background: var(--pink-50); }
+    .nav-item.active { color: var(--pink-700); background: var(--pink-100); }
+    .nav-item.active .nav-icon { transform: scale(1.1); }
+    .nav-item.active .nav-label { font-weight: 700; }
+
+    .nav-icon { width: 23px; height: 23px; transition: var(--transition); }
+
+    .nav-icon svg {
+      width: 100%; height: 100%;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .nav-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.3px; transition: var(--transition); }
+
+    /* Center Home Button - Elevated dollop */
+    .nav-item.home {
+      position: relative;
+      top: -18px;
+      padding: 15px 22px;
+      background: var(--pink-600);
+      border: 4px solid var(--white);
+      border-radius: 45% 55% 52% 48% / 55% 48% 52% 45%;
+      box-shadow: 0 8px 22px rgba(226, 119, 147, 0.45);
+      min-width: 80px;
+      color: var(--white);
+    }
+
+    .nav-item.home:hover {
+      background: var(--pink-700);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(226, 119, 147, 0.55);
+      color: var(--white);
+    }
+
+    .nav-item.home.active { background: var(--pink-700); color: var(--white); }
+    .nav-item.home .nav-icon { width: 25px; height: 25px; }
+    .nav-item.home .nav-label { font-size: 0.72rem; font-weight: 700; }
+
+    /* Responsive */
+    @media (min-width: 768px) {
+      .app-container { max-width: 520px; padding: 0 24px 60px; }
+      .shop-name { font-size: 2.7rem; }
+      .hero { padding: 76px 0 48px; }
+      .map-placeholder { height: 236px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+<base target="_blank">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- ================= HOME SECTION ================= -->
+    <section id="home" class="page-section active">
+      <!-- Hero -->
+      <div class="hero">
+        <div class="logo-wrapper" id="logoWrapper">
+          <img src="favicon.ico" alt="Selam Cake Shop Logo">
+        </div>
+        <h1 class="shop-name">Selam <em>Cake</em> Shop</h1>
+        <p class="tagline">Freshly baked cakes made with love.</p>
+      </div>
+
+      <!-- Action Cards -->
+      <div class="action-cards">
+       
+        <div class="glass-card action-card float-animation" data-link="order">
+          <div class="action-card-inner">
+            <div class="action-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            </div>
+            <div class="action-content">
+              <h2 class="action-title">Order Cakes</h2>
+              <p class="action-desc">Place your order quickly and easily.</p>
+              <a href="https://selamcakeorder.vercel.app/"> 
+                <button class="action-btn">
+                Order Now
+                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </button></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card action-card float-animation-delay" data-link="menu">
+          <div class="action-card-inner">
+            <div class="action-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+                <polyline points="10 9 9 9 8 9"/>
+              </svg>
+            </div>
+            <div class="action-content">
+              <h2 class="action-title">Browse Menu</h2>
+              <p class="action-desc">View our cakes and prices.</p>
+              <a href="https://selamcakemenu.vercel.app/">
+                <button class="action-btn">
+                View Menu
+                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+              </button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social -->
+      <div class="social-section">
+        <h2 class="section-title"><span class="dot"></span>Follow Us</h2>
+        <div class="social-grid">
+          <a href="https://www.instagram.com/selam_cakes/" class="social-btn" data-link="instagram" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C45E7B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </a>
+          <a href="https://www.tiktok.com/@selam_cakes?_r=1&_t=ZS-986K3IfaKW8" class="social-btn" data-link="tiktok" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="#3A97A8">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+          </a>
+          <a href="https://t.me/selamcake" class="social-btn" data-link="telegram" target="_blank" rel="noopener" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="#C45E7B">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p class="footer-text">&copy; Selam Cake Shop.Powerd BY AK Digitals.All Rights Reserved.</p>
+      </footer>
+    </section>
+
+    <!-- ================= ADDRESS SECTION ================= -->
+    <section id="address" class="page-section">
+      <div class="hero" style="padding: 40px 0 30px;">
+        <h1 class="shop-name" style="font-size: 1.8rem;">Find Us</h1>
+        <p class="tagline">Visit our cake shop in person.</p>
+      </div>
+
+      <div class="location-section">
+        <div class="glass-card map-card">
+          <div class="map-placeholder">
+            <svg viewBox="0 0 24 24">
+              <polygon points="1 6 1 22 8 18 16 22 21 18 21 2 16 6 8 2 1 6"/>
+              <line x1="8" y1="2" x2="8" y2="18"/>
+              <line x1="16" y1="6" x2="16" y2="22"/>
+            </svg>
+            <span>Map Placeholder</span>
+          </div>
+          <a href="https://maps.app.goo.gl/ZYEjagfwCNfN7iAv7" class="map-btn" data-link="maps" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24">
+              <polygon points="3 11 22 2 13 21 11 13 3 11"/>
+            </svg>
+            Open in Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-section">
+        <h2 class="section-title"><span class="dot"></span>Our Address</h2>
+        <div class="glass-card contact-card">
+          <div class="contact-item" data-link="address">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="contact-info">
+              <div class="contact-label">Address</div>
+              <div class="contact-value">Adama,Ethiopia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-section">
+        <h2 class="section-title"><span class="dot"></span>Opening Hours</h2>
+        <div class="glass-card contact-card">
+          <div class="contact-item" style="cursor: default;">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="contact-info">
+              <div class="contact-label">Monday - Sunday</div>
+              <div class="contact-value">8:00 AM - 9:00 PM</div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT US SECTION ================= -->
+    <section id="contact" class="page-section">
+      <div class="hero" style="padding: 40px 0 30px;">
+        <h1 class="shop-name" style="font-size: 1.8rem;">Contact Us</h1>
+        <p class="tagline">We'd love to hear from you.</p>
+      </div>
+
+      <div class="contact-section">
+        <h2 class="section-title"><span class="dot"></span>Get in Touch</h2>
+        <div class="glass-card contact-card">
+          <a href="tel:[PHONE]" class="contact-item" data-link="phone">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div class="contact-info">
+              <div class="contact-label">Phone</div>
+              <div class="contact-value">0922695832</div>
+            </div>
+          </a>
+          <a href="mailto:[EMAIL]" class="contact-item" data-link="email">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="contact-info">
+              <div class="contact-label">Email</div>
+              <div class="contact-value">  </div>
+            </div>
+          </a>
+          <div class="contact-item" data-link="address">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="contact-info">
+              <div class="contact-label">Address</div>
+              <div class="contact-value">Adama,Ethiopia</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="social-section">
+        <h2 class="section-title"><span class="dot"></span>Social Media</h2>
+        <div class="social-grid">
+          <a href="https://www.instagram.com/selam_cakes/" class="social-btn" data-link="instagram" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C45E7B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+            </svg>
+          </a>
+          <a href="https://www.tiktok.com/@selam_cakes?_r=1&_t=ZS-986K3IfaKW8" class="social-btn" data-link="tiktok" target="_blank" rel="noopener" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" fill="#3A97A8">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+          </a>
+          <a href="https://t.me/selamcake" class="social-btn" data-link="telegram" target="_blank" rel="noopener" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="#C45E7B">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= BOTTOM NAVIGATION ================= -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <!-- Address (Left) -->
+      <button class="nav-item" data-nav="address" aria-label="Address">
+        <div class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <span class="nav-label">Address</span>
+      </button>
+
+      <!-- Home (Center - Elevated) -->
+      <button class="nav-item home active" data-nav="home" aria-label="Home">
+        <div class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <span class="nav-label">Home</span>
+      </button>
+
+      <!-- Contact Us (Right) -->
+      <button class="nav-item" data-nav="contact" aria-label="Contact Us">
+        <div class="nav-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <span class="nav-label">Contact</span>
+      </button>
+    </div>
+  </nav>
+
+  <script>
+    // ============================================
+    // CONFIGURATION — Edit these links easily
+    // ============================================
+    const CONFIG = {
+      orderPage:    'https://selamcakeorder.vercel.app/',
+      menuPage:     'https://selamcakemenu.vercel.app/',
+      phone:        '0922695832',
+      email:        ' ',
+      address:      'Adama,Ethiopia',
+      location:     'https://maps.app.goo.gl/ZYEjagfwCNfN7iAv7',
+      instagram:    'https://www.instagram.com/selam_cakes/',
+      tiktok:       'https://www.tiktok.com/@selam_cakes?_r=1&_t=ZS-986K3IfaKW8',
+      telegram:     'https://t.me/selamcake'
+    };
+
+    // ============================================
+    // NAVIGATION
+    // ============================================
+    const navItems = document.querySelectorAll('.nav-item');
+    const sections = document.querySelectorAll('.page-section');
+
+    navItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const target = this.dataset.nav;
+
+        navItems.forEach(n => n.classList.remove('active'));
+        this.classList.add('active');
+
+        sections.forEach(s => s.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // ============================================
+    // Ripple Effect
+    // ============================================
+    function createRipple(e, element) {
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const rect = element.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+      element.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
+    }
+
+    // ============================================
+    // Link Handlers
+    // ============================================
+    document.querySelectorAll('[data-link]').forEach(el => {
+      el.addEventListener('click', function(e) {
+        createRipple(e, this);
+        const linkType = this.dataset.link;
+        let url;
+
+        switch(linkType) {
+          case 'order':    url = CONFIG.orderPage; break;
+          case 'menu':     url = CONFIG.menuPage; break;
+          case 'phone':    url = 'tel:' + CONFIG.phone; break;
+          case 'email':    url = 'mailto:' + CONFIG.email; break;
+          case 'maps':     url = CONFIG.location; break;
+          case 'instagram':url = CONFIG.instagram; break;
+          case 'tiktok':   url = CONFIG.tiktok; break;
+          case 'telegram': url = CONFIG.telegram; break;
+          default: return;
+        }
+
+        if (url && !url.includes('[')) {
+          // Valid link — let default behavior happen
+        } else {
+          e.preventDefault();
+          showToast('Link coming soon!');
+        }
+      });
+    });
+
+    // ============================================
+    // Toast Notification
+    // ============================================
+    function showToast(message) {
+      const existing = document.querySelector('.toast-msg');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.className = 'toast-msg';
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: #3A2C33;
+        color: white;
+        padding: 12px 28px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        z-index: 9999;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+        box-shadow: 0 10px 30px rgba(58,44,51,0.28);
+        white-space: nowrap;
+      `;
+      document.body.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+      });
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+        setTimeout(() => toast.remove(), 400);
+      }, 2200);
+    }
+
+    // ============================================
+    // Touch feedback for mobile
+    // ============================================
+    document.querySelectorAll('.glass-card, .social-btn, .map-btn, .contact-item, .nav-item').forEach(el => {
+      el.addEventListener('touchstart', function() {
+        this.style.transform = 'scale(0.97)';
+      }, { passive: true });
+      el.addEventListener('touchend', function() {
+        setTimeout(() => { this.style.transform = ''; }, 150);
+      }, { passive: true });
+    });
+  </script>
+</body>
+</html>
